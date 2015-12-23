@@ -1,0 +1,23 @@
+{% extends '@bestopheVideoCollection/MovieSection/MovieSectionLayout.html.twig' %}
+
+{% block view %}
+    <div class="panel-body">
+        
+            <p>{{ 'movieSection.movieListEmpty'|trans([], 'menu') }} </p>
+        
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- jqueryEllipsis -->
+   <script src="{{ asset('js/jquery.ellipsis.js') }}" type="text/javascript"></script>
+    <script>
+        $('.overview').ellipsis({
+            row: 4,
+            onlyFullWords: true
+        });
+        $(document).ready(function () {
+            $('a[href="' + this.location.pathname + '"]').parents('li,ul').addClass('active');
+        });
+    </script>
+{% endblock %}

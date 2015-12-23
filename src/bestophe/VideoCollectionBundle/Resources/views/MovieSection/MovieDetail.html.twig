@@ -1,0 +1,205 @@
+{% extends '@bestopheVideoCollection/HomePage/MovieMenuLayout.html.twig' %}
+
+{% block title %}{{ 'movieSection.detail'|trans([], 'menu') }}{% endblock %}
+
+{% block MovieContent %}  
+    <div id="movieDetail">
+        {% if movieUser.movie.id is defined %}
+            <div class="movies">
+                <div id="left-section">
+                    <div class="image">
+                        <a href={{movieUser.movie.id}}>
+                            <span class="w185">
+                                <img class="shadow" src="https://image.tmdb.org/t/p/w185{{movieUser.movie.posterpath}}" width="185">
+                            </span>
+                        </a>
+                    </div>
+                    <div class="original-title">
+                        <strong>{{ 'movieDetail.originalTitle'|trans([], 'menu') }}</strong>
+                        <br>
+                        <span>{{ movieUser.movie.originalTitle }}</span>
+                    </div>
+                    <div class="original-language">
+                        <strong>{{ 'movieDetail.originalLanguage'|trans([], 'menu') }}</strong>
+                        <br>
+                        <span>{{ movieUser.movie.originalLanguage }}</span>
+                    </div>
+                    <div class="collection">
+                        <strong>{{ 'movieDetail.collection'|trans([], 'menu') }}</strong>
+                        <br>
+                        {%if movieUser.movie.belongsToCollection is not empty %}
+                            {% for key, val in movieUser.movie.belongsToCollection %}
+                                {%if key=="name" %}
+                                    {%if key is empty %}
+                                        <span>{{ 'movieDetail.collectionEmpty'|trans([], 'menu') }}</span>
+                                    {% else %}
+                                        <span>{{ val }}</span>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <span>{{ 'movieDetail.collectionEmpty'|trans([], 'menu') }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="runtime">
+                        {%if movieUser.movie.runtime !=0 %}
+                            {%set hour= movieUser.movie.runtime // 60 %}
+                            {%set minute= ((movieUser.movie.runtime / 60) - hour)*60 %}
+                            <span><strong>{{ 'movieDetail.runtime'|trans([], 'menu') }} : </strong> {{hour}}h{{minute|round}}mn</span>
+                        {%else %}
+                            <span><strong>{{ 'movieDetail.runtime'|trans([], 'menu') }} : </strong> - </span>
+                        {% endif %}
+                    </div>
+                    {#<div class="production-countries">
+                       <strong>{{ 'movieDetail.prodCountries'|trans([], 'menu') }}:</strong>
+    
+                        {% for prodCountries in movie.productionCountries %}
+                            <span>{{ prodCountries.getName }}</span>
+                        {% endfor %} 
+                    </div>#}
+                </div>
+                <div id="main-section">
+                    <div class="title">
+                        <h2>
+                            <a href="{{movieUser.movie.id}}">{{movieUser.movie.title}}</a>
+                        </h2>
+                        <h3>
+                            <span class="date">({{movieUser.movie.releasedate|date('Y')}})</span>
+                        </h3>
+                    </div>
+                    <div class="toolbar">
+                        {{ form_start(form, { 'attr': {'class': 'form-inline'} }) }}
+
+                        <div class="media-section">
+                            <div class="media-img">
+                                <span class="glyphicon glyphicon-cd" aria-hidden="true"></span>
+                            </div>
+                            {{ form_errors(form.media) }}
+                            {{ form_widget(form.media) }}
+                            {{ form_widget(form.saveMedia) }}
+                        </div>
+                        <div class="rating-section">
+                            {{ form_errors(form.rating) }}
+                            {{ form_widget(form.rating) }}
+                            {{ form_widget(form.saveRating) }}
+                        </div>
+                        <div class="comment-section">
+                            <div class="comment-img">
+                                <i class="fa fa-commenting-o fa-2x fa-flip-horizontal"></i>
+                            </div>
+                            <div class ="comment-textArea">
+                                {{ form_errors(form.comment) }}
+                                {{ form_widget(form.comment) }}
+                                {{ form_widget(form.saveComment) }}
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                    <table id="crew-directors">
+                        {% set previousDirector= "no" %}
+                        <tbody>
+                            <tr>
+                                <td>{{ 'movieDetail.director'|trans([], 'menu') }} :&nbsp;</td>
+                                {% for crew in movieUser.movie.movieCrew %}  
+                                    {% if crew.job=='Director' %}
+                                        <td>
+                                            <div class="directorItem">
+                                                <span class="text">
+                                                    {% if previousDirector == "no" %}                                                  
+                                                        <a href="{{ path('bestophe_VideoCollection_personDetail', { 'id': crew.person.Id }) }}">{{crew.person.name}}</a>
+                                                        {% set previousDirector= "yes" %}
+                                                    {% else %}
+                                                        <span>, </span><a href="{{ path('bestophe_VideoCollection_personDetail', { 'id': crew.person.Id }) }}">{{crew.person.name}}</a> 
+                                                    {% endif%}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        </tbody>                      
+                    </table>
+                    <table id="crew-writers">
+                        {% set previousWriter= "no" %}
+                        <tbody>
+                            <tr>
+                                <td>{{ 'movieDetail.writer'|trans([], 'menu') }} :&nbsp;</td>
+                                {% for crew in movieUser.movie.movieCrew.values %}                                   
+                                    {% if crew.department=="Writing" %}
+                                        <td>
+                                            <div class="writerItem">
+                                                <span class="text">
+                                                    {% if previousWriter == "no" %}
+                                                        <a href="{{ path('bestophe_VideoCollection_personDetail', { 'id': crew.person.Id }) }}">{{crew.person.name}}</a>
+                                                        {% set previousWriter= "yes" %}
+                                                    {% else %}
+                                                        <span>, </span><a href="{{ path('bestophe_VideoCollection_personDetail', { 'id': crew.person.Id }) }}">{{crew.person.name}}</a> 
+                                                    {% endif%}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    {% endif %}     
+                                {% endfor %}     
+                            </tr>
+                        </tbody>                      
+                    </table>
+                    {% if movieUser.movie.overview %}
+                        <div class="overview">
+                            <h4>{{ 'movieDetail.overview'|trans([], 'menu') }}</h4>
+                            <p> {{movieUser.movie.overview}} </p>
+                        </div>
+                    {% endif %}
+                    {% if movieUser.movie.tagline %}
+                        <div class="tagline">
+                            <h4>{{ 'movieDetail.tagline'|trans([], 'menu') }}</h4>                       
+                            <p> {{movieUser.movie.tagline}} </p>
+                        </div>
+                    {% endif %}
+                    <div class="genres">
+                        <h4>{{ 'movieDetail.genres'|trans([], 'menu') }}</h4>
+                        {% for genre in movieUser.movie.genres.values %}                           
+                            <span class="badge">{{ genre.name }}</span>                            
+                        {% endfor %}
+                    </div>
+                    <table id="cast-table">
+                        <h4>{{ 'movieDetail.cast'|trans([], 'menu') }}</h4>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {% for cast in movieUser.movie.movieCast.values %}                                                                                                                   
+                                        {% if not cast is empty %}
+                                            <div class="castItem">
+                                                <div class="image">
+                                                    <a href="{{ path('bestophe_VideoCollection_personDetail', { 'id': cast.person.Id }) }}">                                             
+                                                        <span class="w45">
+                                                            {% if cast.person.profilePath is not null %}
+                                                                <img class="shadow" src="https://image.tmdb.org/t/p/w45{{cast.person.profilePath}}" height="68" width="45">
+                                                            {% else%}
+                                                                <img class="shadow" src="{{ asset('img/no-profile-w45.jpg')}}" height="68" width="45">
+
+                                                            {% endif%}
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="text">
+                                                    <p> 
+                                                        <a href="{{ path('bestophe_VideoCollection_personDetail', { 'id': cast.person.Id }) }}">{{cast.person.name}}</a>
+                                                        {{ 'movieDetail.as'|trans([], 'menu') }} {{cast.role}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}                                 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>  
+        {% else %}
+            <p>{{ 'movieDetail.noMovie'|trans([], 'menu') }}</p>
+        {%endif%}
+    </div>
+
+{% endblock %}
+

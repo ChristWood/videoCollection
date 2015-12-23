@@ -1,0 +1,85 @@
+{% extends '@bestopheVideoCollection/HomePage/MovieMenuLayout.html.twig' %}
+
+{% block title %}{{ 'movieSection.list'|trans([], 'menu') }}{% endblock %}
+
+{% block filter %}
+    {% if filter is defined %}
+        <div class="well well-sm" id="movie-filter">
+            <h6>
+                {%for item in filter %}
+                    {% if item.name is not empty %}
+                        {% if filterName == 'genre' %}
+                            <span><a href="{{ path('bestophe_VideoCollection_movieSectionPaginationByGenre', { 'id': item.id }) }}">{{item.name}}</a> ({{item.nb}})</span>                      
+                            <span>&nbsp;</span>
+                        {% elseif filterName == 'media' %}
+                            <span><a href="{{ path('bestophe_VideoCollection_movieSectionPaginationByMedia', { 'id': item.id }) }}">{{item.name}}</a> ({{item.nb}})</span> 
+                            <span>&nbsp;</span>
+                        {% endif %}
+                    {% endif %}
+                {%endfor%}
+            </h6>
+        </div>
+    {% endif %}
+{% endblock%}
+{% block MovieContent %}
+    <div id="collection">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <div class="left">
+                        <h4>
+                            {% if totalHits is defined %}
+                                {% if totalHits %}
+                                    {{ 'movieSection.collection'|trans([], 'menu') }}
+                                    > {{ 'search.results'|trans([], 'menu') }} "{{query}}" <small> ({{totalHits}} {{ 'search.responses'|trans([], 'menu') }})</small>
+                                {% else %}
+                                    {{ 'movieSection.collection'|trans([], 'menu') }}
+                                    > {{ 'search.noresults'|trans([], 'menu') }}
+                                {% endif %}
+                            {% endif %}
+                            {% if totalMovies is defined %}
+                                {% if totalMovies %}
+                                    {{ 'movieSection.collection'|trans([], 'menu') }}
+                                    {% if itemName is defined %}
+                                        > {{itemName}} <small> - {{totalMovies}} {{ 'movieSection.titles'|trans([], 'menu') }}</small>
+                                    {% else %}
+                                        <small> - {{totalMovies}} {{ 'movieSection.titles'|trans([], 'menu') }}</small>
+                                    {% endif %}
+                                {% else %}
+                                    {{ 'movieSection.new-title'|trans([], 'menu') }}
+                                {% endif %}
+                            {% endif %}
+                            {% if lastAdded is defined %}
+                                {{ 'movieSection.lastAdd'|trans([], 'menu') }}
+                            {% endif %}
+
+                        </h4>
+                    </div>
+                    <div class="right">
+                        <form class="form-inline right" action="{{path('bestophe_VideoCollection_search')}}" method="GET" role="search" name="searchform">
+                            <div class="form-group">
+                                <input type="text" name="query" class="form-control" placeholder="{{ 'search.placeholder'|trans([], 'menu') }}">
+                            </div>
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% block view %}
+            {% endblock%}
+            {% if pagination is defined %}
+                <div class="panel-footer">
+                    {% include '@bestopheVideoCollection/MovieSection/pagination.html.twig' %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('a[href="' + this.location.pathname + '"]').parents('li,ul').addClass('active');
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends '@bestopheVideoCollection/MovieSection/MovieSectionLayout.html.twig' %}
+
+{% block view %}
+
+    <div class="panel-body">
+        <table class="list-group compact-view">
+            <tr>
+                <td class="movie-table">
+                    {% for movie in listMovies %} 
+                        {% if movie.title is defined %}
+                            <div class="movies">
+                                <div class="image">
+                                    <a href="{{ path('bestophe_VideoCollection_movieDetail', { 'id': movie.id }) }}">
+                                        <span class="w92">
+                                            <img class="shadow" src="https://image.tmdb.org/t/p/w92{{movie.posterPath}}" width="92" height="138">
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="title">
+                                    <h6>
+                                        <a href="{{ path('bestophe_VideoCollection_movieDetail', { 'id': movie.id }) }}">{{movie.title}}</a>
+                                        <span class="date">({{movie.releaseDate|date('Y')}})</span>
+                                    </h6>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor%}
+                </td>
+            </tr>
+        </table>
+        <table class="list-group compact-view">
+            <tr>
+                <td class="person-table">
+                    {% for person in listMovies %} 
+                        {% if person.name is defined %}  
+                            <div class="castItem">
+                                <div class="image">
+                                    <a href="{{ path('bestophe_VideoCollection_personDetail', { 'id': person.Id }) }}">                                             
+                                        <span class="w45">
+                                            {% if person.profilePath is not null %}
+                                                <img class="shadow" src="https://image.tmdb.org/t/p/w45{{person.profilePath}}" height="68" width="45">
+                                            {% else%}
+                                                <img class="shadow" src="{{ asset('img/no-profile-w45.jpg')}}" height="68" width="45">
+
+                                            {% endif%}
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="text">
+                                    <p> 
+                                        <a href="{{ path('bestophe_VideoCollection_personDetail', { 'id': person.Id }) }}">{{person.name}}</a>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor%}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    {% if pager is not null and pager.haveToPaginate %}
+        <div class="panel-footer">
+            <div class="pagerfanta">
+                {{ pagerfanta(pager, 'twitter_bootstrap3_translated',{
+                'routeName': 'bestophe_VideoCollection_search',
+                'routeParams': app.request.query.all}) }}
+            </div>
+        </div>
+
+    {% endif %}
+{% endblock%}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('a[href="' + this.location.pathname + '"]').parents('li,ul').addClass('active');
+        });
+    </script>
+{% endblock %}

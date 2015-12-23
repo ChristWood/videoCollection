@@ -1,0 +1,13 @@
+
+{% block rating_widget %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                <label for="{{ child.vars.id }}">
+                    <i class="fa fa-star"></i>
+                </label>
+                {{ form_widget(child) }}
+            {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endblock rating_widget %}

@@ -1,0 +1,92 @@
+
+main:
+    movies: Films
+    add: Ajouter un titre
+    tools: Outils
+    import: Importer un fichier de films
+    discover: Découvrir VideoCollection
+    copyright: VideoCollection (c) 2015
+    data: Données fournies par
+    tmdb: TMDb
+    
+collectionEmpty:
+    tabTitle: Ajouter un premier film
+    title: Votre collection est vide
+    toDo: Il est temps d'ajouter votre premier film ! Cliquer sur  
+    
+addNewMovie:
+    search: Nouvelle recherche
+    searchTitle: Résultats de la recherche
+    noResults: Pas de résultat pour
+    results: Résultats pour
+    tickBox: Cocher pour ajouter à la filmothèque
+    selected: Titre(s) sélectionné(s)
+    cancel: Annuler
+    add: Ajouter
+    placeholder: Rechercher un film
+    
+importListMovie:
+    title: Importer les titres de vos films et laissez VideoCollection trouver les informations pour vous !
+    stepsToFollow: Avant de commencer l'importation, veuillez suivre les étapes suivantes
+    step1: Le fichier doit être au format csv (votre tableur favori gère ce format. Reportez-vous à sa documenation pour plus d'informations)
+    step2: Le fichier est composé d'une colonne (sans en-tête) et d'autant de lignes qu'il y a de titres à rechercher.
+    letsGo: Prêt ? Cliquer sur le bouton !
+    import: Importer un fichier
+    file: Fichier à importer (format .csv)
+    submit: Importer
+    
+movieSection:
+    lastAdd: Derniers ajoutés
+    list: Tous les films
+    detail: Détail
+    titles: titre(s)
+    alpha-view: Liste alphabétique
+    compact-view: Vue compacte
+    poster-view: Vue détaillée
+    collection: Filmothèque
+    new-title: Nouveaux titres
+    byGenre: Par genre
+    byMedia: Par support
+    movieListEmpty: Votre sélection ne renvoie aucun résultat
+    
+movieDetail:
+    originalTitle : Titre original
+    originalLanguage: Langue originale
+    collection: Collection
+    collectionEmpty: Aucune
+    runtime: Durée
+    title: Titre
+    releaseDate: Date réalisation
+    director: Réalisateur(s)
+    writer: Scénariste(s)
+    overview: Résumé
+    tagline: Slogan
+    prodCountries : Pays de production
+    genres: Genres
+    cast: Acteurs
+    as: dans le rôle de
+    noCharacter: (rôle indéfini)
+    noMovie: Ce film n'existe pas dans votre videoCollection
+    
+movieUserForm:
+    chooseMedia: Choisir un support
+    
+personDetail:
+    credits: Credits
+    birthday: Date de naissance
+    deathday: Date du décès
+    placeOfBirth: Lieu de naissance
+    homepage: Page web
+    biography: Biographie
+    acting: Filmographie
+    knownFor: Films marquants
+    moviecreditsEmpty: Pas de films
+    fromWiki: (Extrait de Wikipedia)
+    
+search:
+    placeholder: Rechercher un film, un acteur ou un réalisateur...
+    results: Résultat de la recherche
+    noresults: Aucun résultat
+    responses: réponses
+     
+        

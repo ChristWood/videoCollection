@@ -1,0 +1,128 @@
+#services:
+#    bestophe_video_collection.example:
+#        class: bestophe\VideoCollectionBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+services:       
+#    bestophe_video_collection.doctrine.personChange:
+#        class: bestophe\VideoCollectionBundle\DoctrineListener\PersonChange    
+#        arguments: [@tmdb.people_repository]
+#        tags:
+#            - { name: doctrine.event_listener, event: onFlush, method: onFlush }
+
+    form.type.rating:
+        class: bestophe\VideoCollectionBundle\Form\RatingType
+        tags:
+            - { name: form.type, alias: rating }
+            
+    bestophe_video_collection.locale_listener:
+        class: bestophe\VideoCollectionBundle\EventListener\LocaleListener
+        arguments: ["%kernel.default_locale%"]
+        tags:
+            - { name: kernel.event_subscriber }
+            
+#    bestophe_video_collection.controller.pre_execute_listener:
+#        class: bestophe\VideoCollectionBundle\EventListener\ControllerListener
+#        arguments: ["@templating"]
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.view, method: onKernelView }        
+    
+    bestophe_video_collection.genreManager:
+        class: bestophe\VideoCollectionBundle\Manager\GenreManager
+        arguments: [@doctrine.orm.entity_manager, bestophe\VideoCollectionBundle\Entity\Genre, @tmdb.genre_repository, @security.token_storage]
+        calls:
+            - [setRepositoryLocale,[@service_container]]
+            
+    bestophe_video_collection.movieManager:
+        class: bestophe\VideoCollectionBundle\Manager\MovieManager
+        arguments: [@doctrine.orm.entity_manager, bestophe\VideoCollectionBundle\Entity\Movie, @tmdb.movie_repository, @security.token_storage]
+        calls:
+            - [setRepositoryLocale,[@service_container]]
+            
+    bestophe_video_collection.movieUserManager:
+        class: bestophe\VideoCollectionBundle\Manager\MovieUserManager
+        arguments: [@doctrine.orm.entity_manager, @security.token_storage]
+        
+    bestophe_video_collection.parameterManager:
+        class: bestophe\VideoCollectionBundle\Manager\ParameterManager
+        
+    bestophe_video_collection.searchManager:
+        class: bestophe\VideoCollectionBundle\Manager\SearchManager
+        arguments: [@doctrine.orm.entity_manager, @tmdb.search_repository, @security.token_storage]
+        
+    bestophe_video_collection.personManager:
+        class: bestophe\VideoCollectionBundle\Manager\PersonManager
+        arguments: [@doctrine.orm.entity_manager, @tmdb.people_repository, @security.token_storage]
+        
+    bestophe_video_collection.movieCastManager:
+        class: bestophe\VideoCollectionBundle\Manager\MovieCastManager
+        arguments: [@doctrine.orm.entity_manager, @tmdb.people_repository, @security.token_storage]
+        
+    bestophe_video_collection.movieCrewManager:
+        class: bestophe\VideoCollectionBundle\Manager\MovieCrewManager
+        arguments: [@doctrine.orm.entity_manager, @tmdb.people_repository, @security.token_storage]
+        
+    bestophe_video_collection.creditsManager:
+        class: bestophe\VideoCollectionBundle\Manager\CreditsManager
+        arguments: [@doctrine.orm.entity_manager, @tmdb.people_repository, @tmdb.discover_repository, @security.token_storage]
+        
+    bestophe_video_collection.mediaManager:
+        class: bestophe\VideoCollectionBundle\Manager\MediaManager
+        arguments: [@doctrine.orm.entity_manager, @security.token_storage]
+        
+    bestophe_video_collection.elasticaToMovie:
+        class:  bestophe\VideoCollectionBundle\Transformer\ElasticaToMovieTransformer
+        arguments: [@doctrine,'@service_container', bestophe\VideoCollectionBundle\Entity\Movie]
+        calls:
+            - [ setPropertyAccessor, ['@fos_elastica.property_accessor'] ]
+        tags: 
+            - {name: fos_elastica.elastica_to_model_transformer, type: movie, index: videocollection}
+            
+    bestophe_video_collection.movieToElastica:
+        class:  bestophe\VideoCollectionBundle\Transformer\MovieToElasticaTransformer
+        arguments: ['@service_container']
+        
+    bestophe_video_collection.translation.provider.title:
+        class: bestophe\VideoCollectionBundle\Provider\TitleProvider
+        arguments: [@fos_elastica.index.videocollection.movie, @bestophe_video_collection.movieManager ]
+        tags:
+            - { name: fos_elastica.provider, index: videocollection, type: movie }
+    
+    bestophe_video_collection.elasticaToPerson:
+        class:  bestophe\VideoCollectionBundle\Transformer\ElasticaToPersonTransformer
+        arguments: [@doctrine,'@service_container', bestophe\VideoCollectionBundle\Entity\Person]
+        calls:
+            - [ setPropertyAccessor, ['@fos_elastica.property_accessor'] ]
+        tags: 
+            - {name: fos_elastica.elastica_to_model_transformer, type: person, index: videocollection}
+        
+#    bestophe_video_collection.translation.provider.title.fr:
+#        class: bestophe\VideoCollectionBundle\Provider\TitleFrProvider
+#        arguments: [@fos_elastica.index.videocollection.movieuser_fr, @bestophe_video_collection.movieManager, @bestophe_video_collection.movieUserManager]
+#        tags:
+#            - { name: fos_elastica.provider, index: videocollection, type: movieuser_fr }
+#            
+#    bestophe_video_collection.translation.provider.title.en:
+#        class: bestophe\VideoCollectionBundle\Provider\TitleEnProvider
+#        arguments: [@fos_elastica.index.videocollection.movieuser_en, @bestophe_video_collection.movieManager,@bestophe_video_collection.movieUserManager ]
+#        tags:
+#            - { name: fos_elastica.provider, index: videocollection, type: movieuser_en }
+            
+#    bestophe_video_collection.elasticaToMovieUser:
+#        class:  bestophe\VideoCollectionBundle\Transformer\ElasticaToMovieUserTransformer
+#        arguments: [@doctrine, bestophe\VideoCollectionBundle\Entity\MovieUser]
+#        calls:
+#            - [ setPropertyAccessor, ['@fos_elastica.property_accessor'] ]
+#        tags: 
+#            - {name: fos_elastica.elastica_to_model_transformer, type: movieuser, index: videocollection}
+#            
+#    bestophe_video_collection.movieUserEnToElastica:
+#        class:  bestophe\VideoCollectionBundle\Transformer\MovieUserEnToElasticaTransformer
+#        arguments: ['@service_container']
+       # calls:
+        #    - [ setPropertyAccessor, ['@fos_elastica.property_accessor'] ]
+        
+#    bestophe_video_collection.movieToElastica:
+#        class:  bestophe\VideoCollectionBundle\Transformer\MovieToElasticaTransformer
+#        calls:
+#            - [ setPropertyAccessor, ['@fos_elastica.property_accessor'] ]

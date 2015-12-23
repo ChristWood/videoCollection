@@ -1,0 +1,17 @@
+
+{{ form_start(SearchForm, {'attr': {'class': 'form-inline'}}) }}  
+<form class="navbar-form navbar-right" role="search">
+    <div class="form-group">
+        {{ form_errors(SearchForm.query) }}
+        {{ form_widget(SearchForm.query, { 'attr':  {
+                    'rows': '1'
+        }}) }}
+        <input type="submit" class="btn btn-primary" value="Go" />
+    </div>
+</form>
+{{ form_end(SearchForm) }}
+
+<form id="form_recherche" action="{{ path('MeArticleBundle_search_article') }}" method="post"  class="form-search">
+    {{ form_widget(form) }}
+    <input type="submit" value="Rechercher" />
+</form>

@@ -1,0 +1,128 @@
+{% extends '@bestopheVideoCollection/layout.html.twig' %}
+
+{% block title %}{{ 'addNewMovie.searchTitle'|trans([], 'menu') }}{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css">
+{% endblock %}
+
+{% block content %}
+
+    <div class="well well-sm">
+        {% if nbResults == 0 %}
+            {{ 'addNewMovie.noResults'|trans([], 'menu') }} "{{query}}"
+        {% else %}
+            {{ 'addNewMovie.results'|trans([], 'menu') }} "{{query}}". {{ 'addNewMovie.tickBox'|trans([], 'menu') }}
+        {% endif %}
+    </div>
+
+    <form action="{{path('bestophe_VideoCollection_addNewMovieSave')}}" method="post" name="SearchMovieResultsSave">
+        <div id="tableContainer">
+            <table id="tableResults" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th data-field="index" >#</th>
+                        <th><span class="glyphicon glyphicon-check" aria-hidden="true"></span></th>
+                        <th data-field="posterpath"></th>
+                        <th data-field="originalTitle">{{ 'movieDetail.originalTitle'|trans([], 'menu') }}</th>
+                        <th data-field="title">{{ 'movieDetail.title'|trans([], 'menu') }}</th>
+                        <th data-field="releaseDate">{{ 'movieDetail.releaseDate'|trans([], 'menu') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if nbResults > 0 %}
+                        {% for movie in movies %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td><input class="searchMovieResultsSave" type="checkbox" name="selectedMovie[]" onclick="checkSelected();" value="{{ movie.id}}"> </td>
+                                <td><span class="w92">
+                                        {% if movie.posterpath is not null %}
+                                            <img class="shadow" src="https://image.tmdb.org/t/p/w92{{movie.posterpath}}" width="92" height="138">
+                                        {%else%}
+                                            <img class="shadow" src="{{ asset('img/no-poster-w92.jpg')}}" height="138" width="92">
+                                        {% endif%}
+                                    </span>
+                                </td>
+                        <td>{{movie.originaltitle}}</td>
+                        <td>{{movie.title}}</td>
+                        <td>{{movie.releasedate|date('Y')}}</td>
+                        </tr>
+
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="searchMovieResultsSaveButton">
+            {{ 'addNewMovie.selected'|trans([], 'menu') }} <span class="badge" id="selected">0</span>
+
+            <button type="reset" class="btn" value="Cancel" onclick="cancelSelected();">{{ 'addNewMovie.cancel'|trans([], 'menu') }}</button>
+
+            <input type="submit" class="btn btn-primary" id="add" name="add" value="{{ 'addNewMovie.add'|trans([], 'menu') }}" disabled="disabled" />
+        </div>
+
+    </form>
+    {#{% for flashMessage in app.session.flashbag.get('save') %}
+        < div class ="alert alert-success">
+        {{ flashMessage }}
+    {% endfor %}#}
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tableResults').DataTable({"order": [[0, "asc"]]
+            });
+        });
+        function checkSelected() {
+
+            var inputs = document.querySelectorAll('input[type=checkbox]:checked'),
+                    totalSelected = inputs.length;
+            if (totalSelected > 0) {
+                $('#selected').html(totalSelected);
+                $('#add').prop('disabled', false);
+            } else {
+                $('#selected').html(0);
+                $('#add').prop('disabled', true);
+            }
+        }
+
+        function cancelSelected() {
+            $('#selected').html(0);
+            $('#add').prop('disabled', true);
+        }
+
+
+    </script>
+{% endblock %}
+
+{#
+{% block content %}
+    <div class="well">
+
+        <h3>List of results</h3>
+
+        <ul>
+
+            {% for movie in movies %}
+
+                <p><a href="{{ movie.id}}">{{ movie.title }} ({{movie.releasedate|date('Y')}})</a></p>
+ 
+            {% else %}
+
+                <p>Désolé il n'y a, pour le moment, aucune annonce correspondant à votre recherche.</p>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+{% endblock %}
+#}

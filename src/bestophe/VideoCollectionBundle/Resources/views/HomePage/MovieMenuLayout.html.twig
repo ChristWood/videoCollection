@@ -1,0 +1,38 @@
+{% extends '@bestopheVideoCollection/layout.html.twig' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block content %}
+
+    <div class="collection">
+        <div id="anchor-scroll"></div>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-movie-target">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ path('bestophe_VideoCollection_movieSectionRecentlyAdd') }}"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span></a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-collapse-movie-target">
+                    <ul class="nav navbar-nav" id="movie-menu">
+                        <li><a href="{{ path('bestophe_VideoCollection_movieSectionRecentlyAdd') }}">{{ 'movieSection.lastAdd'|trans([], 'menu') }}</a></li>
+                        <li><a href="{{ path('bestophe_VideoCollection_movieSectionAllMovies') }}">{{ 'movieSection.list'|trans([], 'menu') }}</a></li>
+                        <li><a href="{{ path('bestophe_VideoCollection_movieSectionByGenre') }}">{{ 'movieSection.byGenre'|trans([], 'menu') }}</a></li>
+                        <li><a href="{{ path('bestophe_VideoCollection_movieSectionByMedia') }}">{{ 'movieSection.byMedia'|trans([], 'menu') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>        
+    </div>
+
+{% block filter %}{%endblock %}
+{% block MovieContent %}{%endblock %}
+{% block PersonContent %}{%endblock %}
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

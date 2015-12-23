@@ -1,0 +1,95 @@
+bestophe_VideoCollection_home:
+    path: /
+    defaults: { _controller: bestopheVideoCollectionBundle:HomePage:index}
+
+#bestophe_VideoCollection_homeUser:
+#    path:    /list/{page}
+#    defaults: { _controller: bestopheVideoCollectionBundle:HomePageUser:list,page:1}
+
+#bestophe_VideoCollection_moviesList:
+#    path:    /movie/list/{page}
+#    defaults: { _controller: bestopheVideoCollectionBundle:MovieList:index, page:1}
+    
+bestophe_VideoCollection_addNewMovie:
+    path:    /addNewMovie
+    defaults: { _controller: bestopheVideoCollectionBundle:AddNewMovie:index}
+
+bestophe_VideoCollection_addNewMovieResults:
+    path:    /addNewMovie/results
+    defaults: { _controller: bestopheVideoCollectionBundle:AddNewMovie:results}
+
+bestophe_VideoCollection_addNewMovieSave:
+    path: /addNewMovie/save
+    defaults: { _controller: bestopheVideoCollectionBundle:AddNewMovie:save}
+    
+bestophe_VideoCollection_importListMovie:
+    path:    /importList
+    defaults: { _controller: bestopheVideoCollectionBundle:ImportListMovie:upload}
+    
+#bestophe_VideoCollection_movieSection:
+#    path: /movie
+#    defaults: { _controller: bestopheVideoCollectionBundle:MovieSection:index}
+    
+bestophe_VideoCollection_movieSectionRecentlyAdd:
+    path: /movie/recentlyAdd
+    defaults: { _controller: bestopheVideoCollectionBundle:MovieSection:recentlyAdd}
+   
+bestophe_VideoCollection_movieSectionAllMovies:
+    path: /movie/list/{page}
+    defaults: { _controller: bestopheVideoCollectionBundle:MovieSection:AllMovies, page:1}
+#    requirements:
+#        _method:  GET|POST
+    
+bestophe_VideoCollection_movieSectionAlphaView:
+    path: /movie/alphaview
+    defaults: { _controller: bestopheVideoCollectionBundle:MovieSection:alphaView}
+    
+#bestophe_VideoCollection_movieSectionPosterView:
+#    path: /movie/list/{page}
+#    defaults: { _controller: bestopheVideoCollectionBundle:MovieSection:posterView, page:1}
+    
+bestophe_VideoCollection_movieSectionCompactView:
+    path: /movie/compactview/{page}
+    defaults: { _controller: bestopheVideoCollectionBundle:MovieSection:compactView, page:1}
+    
+bestophe_VideoCollection_movieSectionByGenre:
+    path: /movie/listbygenre
+    defaults:
+        _controller: bestopheVideoCollectionBundle:MovieSection:byGenre
+    
+bestophe_VideoCollection_movieSectionPaginationByGenre:
+    path: /movie/listbygenre/{id}/{page}
+    defaults:
+        _controller: bestopheVideoCollectionBundle:MovieSection:paginationByGenre
+        page: 1
+        id: null
+
+bestophe_VideoCollection_movieSectionByMedia:
+    path: /movie/listbymedia
+    defaults:
+        _controller: bestopheVideoCollectionBundle:MovieSection:byMedia
+    
+bestophe_VideoCollection_movieSectionPaginationByMedia:
+    path: /movie/listbymedia/{id}/{page}
+    defaults:
+        _controller: bestopheVideoCollectionBundle:MovieSection:paginationByMedia
+        page: 1
+        id: null
+    
+bestophe_VideoCollection_movieSectionDelete:
+    path: /movie/delete/{id}
+    defaults: { _controller: bestopheVideoCollectionBundle:MovieSection:deleteMovie}
+    
+bestophe_VideoCollection_movieDetail:
+    path: /movie/{id}
+    defaults: { _controller: bestopheVideoCollectionBundle:MovieDetail:view}
+
+bestophe_VideoCollection_personDetail:
+    path: /movie/person/{id}
+    defaults: { _controller: bestopheVideoCollectionBundle:PersonDetail:view}
+    
+bestophe_VideoCollection_search:
+    path: /search/{page}
+    defaults: { _controller: bestopheVideoCollectionBundle:Search:index, page:1}
+    requirements:
+        _method:  GET|POST

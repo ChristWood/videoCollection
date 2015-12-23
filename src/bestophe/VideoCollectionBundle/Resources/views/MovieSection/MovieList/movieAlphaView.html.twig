@@ -1,0 +1,71 @@
+{% extends '@bestopheVideoCollection/MovieSection/MovieSectionLayout.html.twig' %}
+
+
+    <div class="panel-body">
+        <table class="table table-condensed alpha-view">
+            {% for number in '0'..'9' %}
+                {%set oneNumber= true %}                
+                    {% for movie in listMovies%}
+                        {% if movie.title starts with number|trim %}
+                            {% if oneNumber %}
+                                <tr class="active alphaLetter">
+                                    <td class="alpha-view letter">
+                                        <h4>                                 
+                                            {{number}}                                   
+                                        </h4>
+                                    </td>    
+                                </tr>
+                            {% endif %}
+                            <tr class="title">
+                                <td class="alpha-view title">
+                                    <h5>                                      
+                                        <a href="{{ path('bestophe_VideoCollection_movieDetail', { 'id': movie.id }) }}">{{movie.title}}</a>
+                                    </h5>
+                                </td>
+                            </tr>
+                            {% set oneNumber= false %}
+                        {% endif %}
+                    {% endfor%}
+                {% endfor%}
+         
+            {% for letter in 'a'|upper..'z'|upper %}
+                {%set oneLetter= true %}              
+                    {% for movie in listMovies %}
+                        {% if movie.title starts with letter %}
+                            {% if oneLetter %}
+                                <tr class="active alphaLetter">
+                                    <td class="alpha-view letter">
+                                        <h4>                                 
+                                            {{letter}}                                   
+                                        </h4>
+                                    </td>    
+                                </tr>
+                            {% endif %}
+                            <tr class="title">
+                                <td class="alpha-view title">
+                                    <h5>                                      
+                                        <a href="{{ path('bestophe_VideoCollection_movieDetail', { 'id': movie.id }) }}">{{movie.title}}</a>
+                                    </h5>
+                                </td>
+                            </tr>
+                            {% set oneLetter= false %}
+                        {% endif %}
+                    {% endfor%}
+                {% endfor%}       
+        </table>
+    </div>
+
+
+{% block javascripts %}
+    <!-- jqueryEllipsis -->
+    <script src="{{ asset('js/jquery.ellipsis.js') }}" type="text/javascript"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('a[href="' + this.location.pathname + '"]').parents('li,ul').addClass('active');
+        });
+
+
+    </script>
+{% endblock %}

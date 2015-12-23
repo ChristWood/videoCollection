@@ -1,0 +1,92 @@
+
+main:
+    movies: Movies
+    add: Add a new title
+    tools: Tools
+    import: Import a file with movies
+    discover: Discover VideoCollection
+    copyright: VideoCollection (c) 2015
+    data: Datas supply by
+    tmdb: TMDb
+    
+collectionEmpty:
+    tabTitle: Add your first movie
+    title: Your collection is empty
+    toDo: it's time to add your first movie ! Click on 
+    
+addNewMovie:
+    search: New search
+    searchTitle: Search results
+    noResults: No results for query
+    results: Results for query
+    tickBox: Tick to add into your collection
+    selected: Selected
+    cancel: Cancel
+    add: Add
+    placeholder: Find movies
+
+importListMovie:
+    title: Give a list of titles and let VideoCollection get all the details for you !
+    stepsToFollow: Before importing, please follow the steps below
+    step1: File must be a csv format file (see your favorite spreadsheet programm documentation for more information)
+    step2: The file has only one column without header. There are as many rows as there are titles to request.
+    letsGo: Ready ? click below !
+    import: Import file
+    file: File to upload (.csv format)
+    submit: Upload
+    
+movieSection:
+    lastAdd: Last added
+    list: All movies
+    detail: detail
+    titles: title(s)
+    alpha-view: Alphabetical list
+    compact-view: Compact list
+    poster-view: Poster list
+    collection: Collection
+    new-title: New titles
+    byGenre: By genre
+    byMedia: By media
+    movieListEmpty: No results for your query
+    
+movieDetail:
+    originalTitle : Original Title
+    originalLanguage: Original Language
+    collection: Part of collection
+    collectionEmpty: None 
+    runtime: Runtime
+    title: Title
+    releaseDate: Release date
+    director: Director(s)
+    writer: Writer(s)
+    overview: Overview
+    tagline: Tagline
+    prodCountries : Production Countries
+    genres: Genres
+    cast: Actors
+    as: as
+    noCharacter: (Character not defined)
+    noMovie: This movie doesn't exit in your collection
+    
+movieUserForm:
+    chooseMedia: Choose a media
+
+personDetail:
+    credits: Credits
+    birthday: Birthday
+    deathday: Deathday
+    placeOfBirth: Place of birth
+    homepage: Official homepage
+    biography: Biography
+    knwonFor: Known for
+    acting: Acting
+    moviecreditsEmpty: None
+    fromWiki: (From Wikipedia)
+    
+search:
+    placeholder: Search for a movie, an actor, a director...
+    results: Search results
+    noresults: no results
+    responses: responses
+    
+    
